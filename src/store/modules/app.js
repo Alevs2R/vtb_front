@@ -9,8 +9,7 @@ const URL = `http://${process.env.VUE_APP_API_HOST}:${
 const initialState = () => ({
   email: '',
   user_id: '',
-  events: [],
-  isLogin: true
+  events: []
 });
 
 const state = initialState();

@@ -1,5 +1,6 @@
 import Login from '../pages/login'
 import Board from '../pages/board'
+import NotFound from '../pages/notFound'
 
 export default [
     {
@@ -11,4 +12,8 @@ export default [
         path: '/user/:userId/',
         component: Board
     },
+    {
+        path: "(.*)",
+        component: NotFound
+    }
 ];

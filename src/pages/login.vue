@@ -45,10 +45,6 @@
           password: this.password
         })
           .then((data) => {
-            this.$store.dispatch('getRooms', {
-              user_id: 12,
-            })
-            this.$store.state.isLogin = false
             this.$f7router.navigate({
               name: 'user',
               params: {

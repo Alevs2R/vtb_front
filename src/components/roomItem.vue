@@ -42,7 +42,8 @@
           const endTime  = moment(this.event.end_time);
           return moment(startTime.diff(endTime, 'minutes')).format('HH:mm:s');
         } else {
-            
+          if (moment(this.event.end_time))
+            return moment(startTime.diff(endTime, 'minutes')).format('HH:mm:s');
         }
       }
     }
