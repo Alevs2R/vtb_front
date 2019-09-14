@@ -3,7 +3,7 @@
         <div>
             <f7-navbar  class="board-page-navbar">
                 <f7-nav-title style="padding-left: 10px;color: white;">Голосования</f7-nav-title>
-                <f7-nav-right>
+                <f7-nav-right v-if="!$device.desktop">
                     <f7-button
                             raised panel-open="right"
                     >
@@ -56,7 +56,7 @@
 
     created () {
       this.$store.dispatch('getRooms', {
-        user_id: 12,
+        user_id: 150,
       })
     }
   }
