@@ -22,10 +22,10 @@
         </f7-panel>
 
         <div class="container">
-            <sidebar />
+            <sidebar @changeList="changeList"/>
             <div class="main_content">
                 <room-item-list
-                        :events="events"
+                        :events="listEvents"
                 >
                 </room-item-list>
             </div>
@@ -34,23 +34,43 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState, mapGetters} from 'vuex'
   import RoomItemList from "../components/roomItemList";
   import Sidebar from "../components/sidebar";
 
   export default {
     name: "board",
     components: { Sidebar, RoomItemList },
-    computed: {
-      ...mapState(["email", "events"])
-    },
     data () {
       return {
+        typeEvents: 'active'
+      }
+    },
 
+    computed: {
+      ...mapState(["user"]),
+      ...mapGetters(["pastEvents", 'activeEvents']),
+
+      listEvents () {
+        switch (this.typeEvents) {
+          case 'past':
+            return this.pastEvents
+            break
+          case 'active':
+            return this.activeEvents
+        }
+        return []
       }
     },
 
     methods: {
+      changeList (value) {
+        this.typeEvents = value
+      }
+    },
+
+    mounted () {
+      this.events = this.activeEvents
     },
 
     created () {

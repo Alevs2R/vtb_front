@@ -25,23 +25,32 @@ const axiosSimpleConfig = {
 };
 
 const getters = {
-  authHeader({ user }) {
+  authHeader({user}) {
     return {
       Authorization: `Token ${user.access_token}`
     };
   },
 
-  authPostHeader({ user }) {
+  authPostHeader({user}) {
 
     return {
       "Content-Type": "application/json",
       Authorization: `Token ${user.access_token}`
     };
   },
+
+
+  pastEvents({events}) {
+    return events.filter((item) => !item.actual)
+  },
+
+  activeEvents({events}) {
+    return events.filter((item) => item.actual)
+  }
 };
 
 const actions = {
-  autorization ({commit}) {
+  autorization({commit}) {
     const data = localStorage.getStorage('app')
     commit('setUser', data)
   },
@@ -82,9 +91,9 @@ const mutations = {
   },
 
   setUser(state, data) {
-      console.log(data)
-      state.user = data
-      localStorage.setStorage( state.user, 'app')
+    console.log(data)
+    state.user = data
+    localStorage.setStorage(state.user, 'app')
   }
 };
 
