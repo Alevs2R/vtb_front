@@ -1,5 +1,5 @@
 import axios from "axios";
-import Vue from "vue";
+import localStorage from "../../js/localStorage";
 
 
 const URL = `http://${process.env.VUE_APP_API_HOST}:${
@@ -7,10 +7,14 @@ const URL = `http://${process.env.VUE_APP_API_HOST}:${
 }/api/`;
 
 const initialState = () => ({
-  email: '',
-  user_id: '',
-  access_token: '',
-  events: [],
+  user: {
+    email: '',
+    user_id: '',
+    first_name: '',
+    second_name: '',
+    access_token: ''
+  },
+  events: []
 });
 
 const state = initialState();
@@ -21,24 +25,28 @@ const axiosSimpleConfig = {
 };
 
 const getters = {
-  authHeader({ access_token }) {
+  authHeader({ user }) {
     return {
-      Authorization: `Token ${access_token}`
+      Authorization: `Token ${user.access_token}`
     };
   },
 
-  authPostHeader({ access_token }) {
+  authPostHeader({ user }) {
+
     return {
       "Content-Type": "application/json",
-      Authorization: `Token ${access_token}`
+      Authorization: `Token ${user.access_token}`
     };
   },
 };
 
 const actions = {
-  login({getters, commit}, data) {
+  autorization ({commit}) {
+    const data = localStorage.getStorage('app')
+    commit('setUser', data)
+  },
 
-    commit("setProfile", data)
+  login({getters, commit}, data) {
     return axios
       .post(`${URL}login`, data, axiosSimpleConfig)
       .then(({data}) => {
@@ -69,16 +77,14 @@ const actions = {
 };
 
 const mutations = {
-  setProfile(state, data) {
-    state.email = data.email
-  },
-
   setEvents(state, data) {
     state.events = data
   },
+
   setUser(state, data) {
-      state.user_id = data.user_id
-      state.access_token = data.token
+      console.log(data)
+      state.user = data
+      localStorage.setStorage( state.user, 'app')
   }
 };
 

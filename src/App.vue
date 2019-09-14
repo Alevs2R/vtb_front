@@ -11,7 +11,7 @@
 
   import {mapGetters} from "vuex";
   import routes from "./router/index";
-
+  import localStorage from "./js/localStorage";
 
   export default {
     data() {
@@ -34,6 +34,11 @@
         },
       };
     },
+
+    created () {
+      if(localStorage.getStorage('app') && localStorage.getStorage('app').access_token)
+        this.$store.dispatch('autorization')
+    }
   };
 </script>
 <style>
