@@ -3,7 +3,7 @@
         <div>
             <f7-navbar  class="board-page-navbar">
                 <f7-nav-title style="padding-left: 10px;color: white;">Голосования</f7-nav-title>
-                <f7-nav-right v-if="!$device.desktop">
+                <f7-nav-right v-if="!isDesktop">
                     <f7-button
                             raised panel-open="right"
                     >
@@ -48,7 +48,7 @@
     },
 
     computed: {
-      ...mapState(["user"]),
+      ...mapState(["user","isDesktop"]),
       ...mapGetters(["pastEvents", 'activeEvents']),
 
       listEvents () {
@@ -67,10 +67,6 @@
       changeList (value) {
         this.typeEvents = value
       }
-    },
-
-    mounted () {
-      this.events = this.activeEvents
     },
 
     created () {

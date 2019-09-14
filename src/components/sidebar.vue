@@ -54,7 +54,7 @@
         min-height: 350px;
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 768px) {
         .sidebar {
             display: none;
         }

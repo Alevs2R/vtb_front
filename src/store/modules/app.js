@@ -15,7 +15,8 @@ const initialState = () => ({
     access_token: ''
   },
   events: [],
-  room: {}
+  room: {},
+  isDesktop: true
 });
 
 const state = initialState();
@@ -114,6 +115,10 @@ const mutations = {
 
   setRoom(state, data){
     state.room = data
+  },
+
+  isDesktop (state) {
+    state.isDesktop = window.innerWidth >= 768
   }
 };
 

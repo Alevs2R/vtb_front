@@ -36,6 +36,10 @@
     },
 
     created () {
+      this.$store.commit('isDesktop')
+      window.addEventListener('resize', () => {
+        this.$store.commit('isDesktop')
+      })
       if(localStorage.getStorage('app') && localStorage.getStorage('app').access_token)
         this.$store.dispatch('autorization')
     }
