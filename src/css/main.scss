@@ -1,2 +1,16 @@
 $main-color: #1A4ED4;
 $main-background: #F1F0F0;
+
+.light_button {
+  cursor: pointer;
+  border: 1px solid $main-color;
+  color: $main-color;
+  line-height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  display: inline-block;
+  &:hover {
+    background: $main-color;
+    color: white;
+  }
+}
