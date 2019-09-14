@@ -40,10 +40,9 @@
         if (this.event.actual) {
           const startTime = moment()
           const endTime  = moment(this.event.end_time);
-          console.log(startTime, endTime)
-          return startTime.diff(endTime, 'minute')
+          return moment(startTime.diff(endTime, 'minutes')).format('HH:mm:s');
         } else {
-
+            
         }
       }
     }
