@@ -56,9 +56,7 @@
 
     .event-item {
         background: white;
-        height: 200px;
         border-radius: 5px;
-        margin-top: 5px;
         padding: 10px;
         overflow: hidden;
 
@@ -69,10 +67,9 @@
         &-layout {
             width: 100%;
             cursor: pointer;
-            height: 205px;
             background: $main-color;
             border-radius: 5px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
         }
     }
 </style>
