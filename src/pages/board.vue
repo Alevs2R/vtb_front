@@ -22,9 +22,7 @@
         </f7-panel>
 
         <div class="container">
-            <div class="sidebar">
-                azazakek
-            </div>
+            <sidebar />
             <div class="main_content">
                 <room-item-list
                         :events="events"
@@ -38,10 +36,11 @@
 <script>
   import {mapState} from 'vuex'
   import RoomItemList from "../components/roomItemList";
+  import Sidebar from "../components/sidebar";
 
   export default {
     name: "board",
-    components: { RoomItemList },
+    components: { Sidebar, RoomItemList },
     computed: {
       ...mapState(["email", "events"])
     },
@@ -93,19 +92,5 @@
 
     .main_content {
         flex: 1;
-    }
-
-    .sidebar {
-        display: block;
-        width: 250px;
-        background: white;
-        border-radius: 5px;
-        margin-right: 30px;
-    }
-
-    @media screen and (max-width: 500px) {
-        .sidebar {
-            display: none;
-        }
     }
 </style>
