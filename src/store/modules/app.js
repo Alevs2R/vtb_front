@@ -14,7 +14,8 @@ const initialState = () => ({
     second_name: '',
     access_token: ''
   },
-  events: []
+  events: [],
+  room: {}
 });
 
 const state = initialState();
@@ -82,6 +83,22 @@ const actions = {
       .catch((error) => {
         throw error
       })
+  },
+  getRoom({getters, commit}, data) {
+
+    const axiosConfig = {
+      headers: getters["authPostHeader"]
+    };
+
+    return axios
+      .get(`${URL}room/${data.id}`, axiosConfig)
+      .then(({data}) => {
+        commit("setRoom", data)
+        return data
+      })
+      .catch((error) => {
+        throw error
+      })
   }
 };
 
@@ -91,9 +108,12 @@ const mutations = {
   },
 
   setUser(state, data) {
-    console.log(data)
     state.user = data
     localStorage.setStorage(state.user, 'app')
+  },
+
+  setRoom(state, data){
+    state.room = data
   }
 };
 

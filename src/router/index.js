@@ -15,7 +15,7 @@ export default [
     },
     {
         name: 'room',
-        path: 'room/:roomId/',
+        path: '/room/:roomId/',
         component: Room
     },
     {

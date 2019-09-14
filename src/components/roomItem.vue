@@ -1,5 +1,5 @@
 <template>
-    <div class="event-item-layout">
+    <div class="event-item-layout" @click="navigateRoom">
         <div class="event-item">
             <div class="event-item-title">
                 {{event.title}}
@@ -60,6 +60,15 @@
     },
 
     methods: {
+      navigateRoom () {
+        this.$f7router.navigate({
+          name: 'room',
+          params: {
+            roomId: this.event.id
+          }
+        })
+      },
+
       updateTimeLeft() {
         this.timeLeft = this.getTime();
       },

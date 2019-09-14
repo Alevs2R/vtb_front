@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="profile">
             <img :src="user_icon" class="profile_img" />
-            <span class="profile_name">Алексей</span>
+            <span class="profile_name">{{user.first_name}}</span>
         </div>
         <div class="event_sections">
             <div :class="{'event_section':true, 'active': active === 'active'}" @click="changeList('active')">Текущие
