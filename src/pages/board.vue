@@ -86,7 +86,7 @@
     .container {
         display: flex;
         flex-direction: row;
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 30px auto 0;
     }
 
