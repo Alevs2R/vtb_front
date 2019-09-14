@@ -30,6 +30,7 @@
   export default {
     name: "roomItem",
     props: ['event'],
+
     computed: {
 
       getStatus() {
@@ -37,13 +38,16 @@
       },
 
       getTime() {
+        const startTime  = moment(this.event.start_time);
+        const endTime  = moment(this.event.end_time);
+        const nowTime = moment()
+
         if (this.event.actual) {
-          const startTime = moment()
-          const endTime  = moment(this.event.end_time);
-          return moment(startTime.diff(endTime, 'minutes')).format('HH:mm:s');
+          return moment(nowTime.diff(endTime, 'minutes')).format('HH:mm:s');
         } else {
-          if (moment(this.event.end_time))
-            return moment(startTime.diff(endTime, 'minutes')).format('HH:mm:s');
+          if (startTime.isAfter(nowTime))
+            return `${startTime.format('HH:mm')}-${endTime.format('HH:mm')}`;
+          else return ''
         }
       }
     }
@@ -70,6 +74,7 @@
             background: $main-color;
             border-radius: 5px;
             margin-bottom: 20px;
+            padding-top: 5px;
         }
     }
 </style>

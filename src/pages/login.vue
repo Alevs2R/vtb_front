@@ -48,7 +48,7 @@
             this.$f7router.navigate({
               name: 'user',
               params: {
-                userId: 12
+                userId: data.user_id
               }
             });
             return
