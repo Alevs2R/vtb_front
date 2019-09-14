@@ -1,7 +1,7 @@
 <template>
   <f7-page class="main-page">
-    <f7-login-screen class="demo-login-screen" opened>
-      <f7-page login-screen>
+    <f7-login-screen class="login-screen" opened>
+      <f7-page login-screen class="login-screen-page">
         <f7-login-screen-title>VTB Online Meet Up</f7-login-screen-title>
         <f7-list form>
           <f7-list-input
@@ -37,7 +37,22 @@
     },
     methods:{
       signIn () {
-
+        this.$store.dispatch('login', {
+          email: this.email,
+          password: this.password
+        })
+                .then((data) => {
+                  this.$store.commit('setEmail', email)
+                  this.$f7router.navigate(`/user/${data}`)
+                })
+                .catch(() => {
+                  var toastCenter = this.$f7.toast.create({
+                    text: "Проблемы с подключением к интернету",
+                    position: "center",
+                    closeTimeout: 1000
+                  });
+                  toastCenter.open();
+                })
       }
     }
   }
@@ -46,5 +61,10 @@
 <style lang="scss" scoped>
   @import "../css/main";
 
+  .login-screen {
+    &-page {
+      margin-top: 50px;
+    }
+  }
 
 </style>

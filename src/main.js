@@ -25,7 +25,7 @@ import App from "./App";
 //Import App Icons
 import IconsStyles from "./css/icons.css";
 
-//import WebSocketHandler from "./js/websocket";
+import WebSocketHandler from "./js/websoket";
 
 // Init App
 new Vue({
@@ -36,7 +36,8 @@ new Vue({
   store,
   data() {
     return {
-      theme: "ios"
+      theme: "ios",
+      socket: new WebSocketHandler(store)
     };
   },
   render: h => h(App)
