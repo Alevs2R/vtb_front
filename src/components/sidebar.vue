@@ -5,10 +5,10 @@
             <span class="profile_name">Алексей</span>
         </div>
         <div class="event_sections">
-            <div :class="{'event_section':true, 'active': false}">Текущие
+            <div :class="{'event_section':true, 'active': active === 'active'}" @click="changeList('active')">Текущие
                 <div class="event_count">2</div>
             </div>
-            <div :class="{'event_section':true, 'active': true}">Прошедшие</div>
+            <div :class="{'event_section':true, 'active': active === 'past'}"  @click="changeList('past')">Прошедшие</div>
         </div>
         <div class="create_btn_container">
             <div class="light_button" style="width: 60%">Создать</div>
@@ -18,14 +18,26 @@
 
 <script>
   import user_icon from "../assets/user.svg";
-
+  import { mapState } from 'vuex'
 
   export default {
     name: "sidebar",
     data: function() {
       return {
-        user_icon
+        user_icon,
+        active: 'active'
       };
+    },
+
+    computed: {
+      ...mapState(["user"])
+    },
+
+    methods: {
+      changeList(value) {
+        this.active = value
+        this.$emit('changeList', value)
+      }
     }
   };
 </script>
