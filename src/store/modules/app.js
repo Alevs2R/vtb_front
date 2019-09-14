@@ -9,23 +9,38 @@ const URL = `http://${process.env.VUE_APP_API_HOST}:${
 const initialState = () => ({
   email: '',
   user_id: '',
-  events: []
+  access_token: '',
+  events: [],
 });
 
 const state = initialState();
-const axiosConfig = {
+const axiosSimpleConfig = {
   headers: {
     "Content-Type": "application/json"
   }
 };
 
-const getters = {};
+const getters = {
+  authHeader({ access_token }) {
+    return {
+      Authorization: `Token ${access_token}`
+    };
+  },
+
+  authPostHeader({ access_token }) {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Token ${access_token}`
+    };
+  },
+};
 
 const actions = {
   login({getters, commit}, data) {
+
     commit("setProfile", data)
     return axios
-      .post(`${URL}login`, data, axiosConfig)
+      .post(`${URL}login`, data, axiosSimpleConfig)
       .then(({data}) => {
         commit("setUser", data)
         return data
@@ -36,6 +51,11 @@ const actions = {
   },
 
   getRooms({getters, commit}, data) {
+
+    const axiosConfig = {
+      headers: getters["authPostHeader"]
+    };
+
     return axios
       .post(`${URL}rooms`, data, axiosConfig)
       .then(({data}) => {
@@ -58,6 +78,7 @@ const mutations = {
   },
   setUser(state, data) {
       state.user_id = data.user_id
+      state.access_token = data.token
   }
 };
 
