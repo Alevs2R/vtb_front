@@ -92,5 +92,6 @@
 
     .main_content {
         flex: 1;
+        margin: 0 30px;
     }
 </style>
