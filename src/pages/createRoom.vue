@@ -9,59 +9,56 @@
                             label="Название голосования"
                             type="text"
                             placeholder="Введите название"
+                            v-model="title"
                             clear-button
                     ></f7-list-input>
 
                     <f7-list-input
                             label="Описание повестки"
                             type="textarea"
+                            v-model="description"
                             placeholder="Введите описание повестки"
                             clear-button
                     ></f7-list-input>
                 </f7-list>
                 <div class="section-title" style="margin-top: -20px">Документы</div>
                 <div class="myrow">
-                    <div class="attachment">
+                    <div class="attachment" v-for="file in files">
                         <img :src="Attachment" />
-                        PSW_web-track.pdf
-                        <div class="attachment-cross">
+                        {{file.name}}
+                        <div class="attachment-cross" @click="delFile(file)">
                             <img :src="Multiply" />
                         </div>
                     </div>
-                    <div class="attachment">
-                        <img :src="Attachment" />
-                        Критерии оценки.doc
-                        <div class="attachment-cross">
-                            <img :src="Multiply" />
+                        <div class="light_button" style="width: 130px;position: relative;" @click="">
+                            <input type="file" class="file" ref="file" @change="changeMaterial" />
+                            Добавить
                         </div>
-                    </div>
-                    <div class="light_button" style="width: 130px" @click="">Добавить</div>
+
                 </div>
                 <div class="section-title">Вопросы</div>
                 <div class="votings">
 
                     <f7-row>
                         <f7-col width="100" tablet-width="50" desktop-width="50">
-                            <div class="voting">
+                            <div class="voting" v-for="poll in listPolls">
                                 <input
                                         type="text"
                                         placeholder="Ваш вопрос"
                                         class="myinput"
                                 />
                                 <div style="font-size: 12px; margin: 20px 0 10px">Варианты ответа</div>
-                                <CreateVoteOption />
-                                <CreateVoteOption />
-                                <CreateVoteOption />
+                                <CreateVoteOption  v-for="ansewrs in poll"/>
                                 <div class="light_button" style="width: 250px" @click="">Добавить вариант ответа</div>
                             </div>
                         </f7-col>
                         <f7-col width="100" tablet-width="50" desktop-width="50">
-                            <div class="light_button" style="width: 200px" @click="">Добавить вопрос</div>
+                            <div class="light_button" style="width: 200px;margin-top: 30px" @click="pushListPolls">Добавить вопрос</div>
                         </f7-col>
                     </f7-row>
                 </div>
                 <div style="padding: 15px;">
-                    <div class="light_button" style="width: 200px" @click="">Выбрать участников</div>
+                    <div class="light_button" style="width: 200px" @click="peoplePopupOpened = true">Выбрать участников</div>
                 </div>
 
                 <div style="padding: 15px">
@@ -79,26 +76,19 @@
                 <f7-block>
                     <f7-block-title>Участники</f7-block-title>
                     <f7-block strong>
-                        <f7-chip text="Example Chip" deleteable @click="deleteChip"></f7-chip>
-                        <f7-chip text="Chris" media="C" media-bg-color="orange" text-color="black" deleteable @click="deleteChip"></f7-chip>
-                        <f7-chip text="Jane Doe" deleteable @click="deleteChip">
-                            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
-                        </f7-chip>
-                        <f7-chip text="One More Chip" deleteable @click="deleteChip"></f7-chip>
-                        <f7-chip text="Jennifer" media-bg-color="pink" media="J" deleteable @click="deleteChip"></f7-chip>
-                        <f7-chip text="Adam Smith" deleteable @click="deleteChip">
-                            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
-                        </f7-chip>
+                        <f7-chip
+                                v-for="chuser in changeUsers"
+                                :text="getFullName(chuser.firstName, chuser.secondName)"
+                                deleteable @click="deleteChip(chuser)"></f7-chip>
                     </f7-block>
                     <f7-block-title>Выберите из списка</f7-block-title>
                     <f7-list>
-                        <f7-list-item link="#" title="Ivan Petrov" after="CEO">
-                            <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
-                        </f7-list-item>
-                        <f7-list-item link="#" title="John Doe" after="Cleaner">
-                            <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
-                        </f7-list-item>
-                        <f7-list-item link="#" title="Jenna Smith">
+                        <f7-list-item v-for="user in users"
+                                      link="#"
+                                      :title="getFullName(user.firstName, user.secondName)"
+                                      :after="user.role"
+                                      @click="changePersons(user)"
+                        >
                             <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
                         </f7-list-item>
                     </f7-list>
@@ -117,17 +107,57 @@
 
   export default {
     components: { Navbar, CreateVoteOption },
-    name: "create room",
+    name: "createroom",
     data() {
       return {
         Attachment, Multiply,
-        peoplePopupOpened: true,
+        peoplePopupOpened: false,
+        users: [],
+        changeUsers: [],
+        title: '',
+        description: '',
+        files:[],
+        listPolls: []
       };
     },
+    methods: {
+      getFullName (firstName, secondName) {
+        return `${firstName} ${secondName}`
+      },
+
+      changePersons(user) {
+        if (!(this.changeUsers.map((item) =>item.id).indexOf(user.id)+1)) {
+          this.changeUsers.push(user)
+        }
+      },
+      deleteChip(user){
+        const indexDel = this.changeUsers.map((item) =>item.id).indexOf(user.id)
+        this.changeUsers.splice(indexDel,1)
+      },
+      changeMaterial() {
+        this.files.push(this.$refs.file.files[0]);
+        if (this.file && this.file.size / (1024 * 1024) > 10) {
+          this.$f7.dialog.alert("Выберите файл до 10Мб", "Ошибка");
+        }
+      },
+      delFile(file){
+        const indexDel = this.files.map((item) =>item.name).indexOf(file.name)
+        this.files.splice(indexDel,1)
+      },
+      pushListPolls () {
+        this.listPolls.push({
+          title: '',
+          answers:[{
+            value:''
+          }]
+        })
+      }
+    },
     created() {
-      // this.$store.dispatch('getRoom', {
-      //   id: this.$f7route.params.roomId,
-      // })
+       this.$store.dispatch('getUsers')
+         .then((data) => {
+           this.users = data
+         })
     }
   };
 </script>
@@ -137,7 +167,7 @@
 
     .container {
         max-width: 1100px;
-        margin: 30px auto 0;
+        margin: 30px auto 20px;
         background: white;
         border-radius: 5px;
         overflow: hidden;
@@ -206,6 +236,14 @@
     .myinput {
         font-size: 18px;
         width: 100%!important;
+    }
+
+    .file {
+        position: absolute;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
     }
 
 </style>

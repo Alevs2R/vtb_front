@@ -16,7 +16,7 @@ export default [
     component: Board
   },
   {
-    name: "create room",
+    name: "createroom",
     path: "/room/create/",
     component: CreateRoom
   },

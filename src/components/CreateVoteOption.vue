@@ -1,6 +1,6 @@
 <template>
     <div class="option">
-        <input type="text" value="Один миллион" />
+        <input @change="$emit('change', value)" type="text" v-model="value" />
         <div class="option-cross">
             <img :src="Multiply" />
         </div>
@@ -14,7 +14,8 @@
     name: "CreateVoteOption",
     data() {
       return {
-        Multiply
+        Multiply,
+        value: ''
       };
     },
   };
@@ -42,8 +43,8 @@
             float: right;
             background: $gray-color;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
             text-align: center;
             display: flex;
             justify-content: center;

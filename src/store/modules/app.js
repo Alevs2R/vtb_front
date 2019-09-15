@@ -101,6 +101,22 @@ const actions = {
       .catch((error) => {
         throw error
       })
+  },
+
+  getUsers({getters},) {
+
+    const axiosConfig = {
+      headers: getters["authPostHeader"]
+    };
+
+    return axios
+      .get(`${URL}users`, axiosConfig)
+      .then(({data}) => {
+        return data
+      })
+      .catch((error) => {
+        throw error
+      })
   }
 };
 
