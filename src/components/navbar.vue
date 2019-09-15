@@ -11,7 +11,7 @@
             <f7-nav-title style="padding-left: 10px;color: white;">Голосования</f7-nav-title>
             <f7-nav-right>
                 <f7-button
-                        v-if="!isDesktop"
+                        v-if="menu && !isDesktop"
                         raised panel-open="right"
                 >
                     <i class="f7-icons"
@@ -30,7 +30,11 @@
       isBack: {
         type: Boolean,
         default: false
-      }
+      },
+      menu: {
+        type: Boolean,
+        default: false
+      },
     },
     computed: {
       ...mapState(['isDesktop'])

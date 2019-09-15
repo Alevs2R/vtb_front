@@ -1,25 +1,25 @@
 <template>
     <f7-page class="board-page">
-        <navbar></navbar>
-        <f7-panel right resizable>
-            <f7-view>
-                <right-menu
-                        :user="user"
-                        :countActive="activeEvents.length"
-                >
-                </right-menu>
-            </f7-view>
-        </f7-panel>
+        <div>
+            <navbar menu></navbar>
+            <f7-panel right resizable class="board-page-panel">
+                    <right-menu
+                            :user="user"
+                            :countActive="activeEvents.length"
+                    >
+                    </right-menu>
+            </f7-panel>
 
-        <div class="container">
-            <sidebar
-                    :countActive="activeEvents.length"
-            />
-            <div class="main_content">
-                <room-item-list
-                        :events="listEvents"
-                >
-                </room-item-list>
+            <div class="container">
+                <sidebar
+                        :countActive="activeEvents.length"
+                />
+                <div class="main_content">
+                    <room-item-list
+                            :events="listEvents"
+                    >
+                    </room-item-list>
+                </div>
             </div>
         </div>
     </f7-page>
@@ -34,17 +34,16 @@
 
   export default {
     name: "board",
-    components: {Navbar, RightMenu, Sidebar, RoomItemList },
-    data () {
-      return {
-      }
+    components: {Navbar, RightMenu, Sidebar, RoomItemList},
+    data() {
+      return {}
     },
 
     computed: {
-      ...mapState(["user","isDesktop", "mode"]),
+      ...mapState(["user", "isDesktop", "mode"]),
       ...mapGetters(["pastEvents", 'activeEvents']),
 
-      listEvents () {
+      listEvents() {
         switch (this.mode) {
           case 'past':
             return this.pastEvents;
@@ -55,7 +54,7 @@
       }
     },
 
-    created () {
+    created() {
       this.$store.dispatch('getRooms', {
         user_id: 150,
       })
