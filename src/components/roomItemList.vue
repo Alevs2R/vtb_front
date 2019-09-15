@@ -1,5 +1,5 @@
 <template>
-    <f7-row>
+    <f7-row style="margin-bottom: 50px">
         <f7-col width="100" tablet-width="50" desktop-width="50" v-for="event in events" :key="event.id">
             <room-item
                     :event="event"
