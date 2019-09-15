@@ -16,7 +16,8 @@ const initialState = () => ({
   },
   events: [],
   room: {},
-  isDesktop: true
+  isDesktop: true,
+  mode: 'active'
 });
 
 const state = initialState();
@@ -41,7 +42,6 @@ const getters = {
     };
   },
 
-
   pastEvents({events}) {
     return events.filter((item) => !item.actual)
   },
@@ -49,6 +49,7 @@ const getters = {
   activeEvents({events}) {
     return events.filter((item) => item.actual)
   }
+
 };
 
 const actions = {
@@ -119,6 +120,10 @@ const mutations = {
 
   isDesktop (state) {
     state.isDesktop = window.innerWidth >= 768
+  },
+
+  setMode(state, value) {
+    state.mode = value
   }
 };
 

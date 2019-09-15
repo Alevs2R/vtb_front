@@ -1,12 +1,12 @@
 <template>
-    <div class="sidebar">
+    <div :class="{'sidebar':true, 'right-menu': rightMenu}">
         <div class="profile">
             <img :src="user_icon" class="profile_img" />
             <span class="profile_name">{{user.first_name}}</span>
         </div>
         <div class="event_sections">
             <div :class="{'event_section':true, 'active': active === 'active'}" @click="changeList('active')">Текущие
-                <div class="event_count">2</div>
+                <div class="event_count">{{countActive}}</div>
             </div>
             <div :class="{'event_section':true, 'active': active === 'past'}"  @click="changeList('past')">Прошедшие</div>
         </div>
@@ -22,6 +22,16 @@
 
   export default {
     name: "sidebar",
+    props: {
+      countActive: {
+        type: Number,
+        default: 0
+      },
+      rightMenu: {
+        type: Boolean,
+        default: false
+      }
+    },
     data: function() {
       return {
         user_icon,
@@ -36,7 +46,7 @@
     methods: {
       changeList(value) {
         this.active = value
-        this.$emit('changeList', value)
+        this.$store.commit('setMode', value)
       }
     }
   };
@@ -57,6 +67,12 @@
     @media screen and (max-width: 768px) {
         .sidebar {
             display: none;
+        }
+        .sidebar.right-menu {
+            display: block;
+            width: auto;
+            height: 100%;
+
         }
     }
 

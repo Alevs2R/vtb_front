@@ -15,14 +15,19 @@
         </div>
         <f7-panel right resizable>
             <f7-view>
-                <f7-page>
-                    <f7-block>Right panel content</f7-block>
-                </f7-page>
+                <right-menu
+                        :user="user"
+                        :countActive="activeEvents.length"
+                >
+
+                </right-menu>
             </f7-view>
         </f7-panel>
 
         <div class="container">
-            <sidebar @changeList="changeList"/>
+            <sidebar
+                    :countActive="activeEvents.length"
+            />
             <div class="main_content">
                 <room-item-list
                         :events="listEvents"
@@ -37,22 +42,22 @@
   import {mapState, mapGetters} from 'vuex'
   import RoomItemList from "../components/roomItemList";
   import Sidebar from "../components/sidebar";
+  import RightMenu from "../components/rightMenu";
 
   export default {
     name: "board",
-    components: { Sidebar, RoomItemList },
+    components: {RightMenu, Sidebar, RoomItemList },
     data () {
       return {
-        typeEvents: 'active'
       }
     },
 
     computed: {
-      ...mapState(["user","isDesktop"]),
+      ...mapState(["user","isDesktop", "mode"]),
       ...mapGetters(["pastEvents", 'activeEvents']),
 
       listEvents () {
-        switch (this.typeEvents) {
+        switch (this.mode) {
           case 'past':
             return this.pastEvents
             break
@@ -60,12 +65,6 @@
             return this.activeEvents
         }
         return []
-      }
-    },
-
-    methods: {
-      changeList (value) {
-        this.typeEvents = value
       }
     },
 
