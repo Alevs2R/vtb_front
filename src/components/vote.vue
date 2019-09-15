@@ -5,19 +5,24 @@
                 v-for="vote in votes"
                 :key="vote.id"
                 class="vote_wrapper"
-                v-on="{click: selected == vote.id ? () => { cancel_vote(vote) } : () => {}}"
                 @click="changeVote(vote)"
         >
             <div
                     class="vote_bar"
-                    :style="[ bar_animate ?  { width: Math.round((vote.voted / total_votes) * 100) + '%' } : {}]"
+                    :style="[ bar_animate && selected != null ?  { width: Math.round((vote.voted / total_votes) * 100) + '%' } : {}]"
             ></div>
             <div class="vote_left">
                 <div class="vote_name">{{ vote.value}}</div>
+                <div v-if="selected != null" class="subtext"><span v-if="selected == vote.id">Ваш выбор, </span>{{ vote.voted }} голосов</div>
             </div>
             <div class="vote_result">
-                <i class="f7-icons" v-if="selected == vote.id">check</i>
-                {{ vote.voted }}
+
+            </div>
+        </div>
+        <div class="actions">
+
+            <div class="more">
+                Подробнее
             </div>
         </div>
     </div>
@@ -27,13 +32,19 @@
   import {mapState} from 'vuex'
 
   export default {
-    props: ["votes", "selected", "total_votes", "cancel_vote", "title"],
+    props: ["votes", "selected", "total_votes", "cancel_vote", "title", "changeVoteEx"],
     computed:{ ...mapState(["socket"])},
     data: () => ({
       bar_animate: false
     }),
     methods: {
       changeVote(vote){
+        if (this.selected === vote.id) {
+          this.cancel_vote();
+          return;
+        }
+
+        this.changeVoteEx(vote);
         this.socket.send({
           type: 'vote',
           room_id: this.$f7route.params.roomId,
@@ -50,6 +61,25 @@
 </script>
 
 <style scoped>
+    .actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: white;
+        font-size: 16px;
+        margin-top: 15px;
+    }
+
+    .cancel, .more {
+        color: rgba(255,255,255,.7);
+        cursor: pointer;
+    }
+
+    .cancel:hover, .more:hover {
+        color: white;
+    }
+
+
     .votes {
         padding: 10px 20px 20px;
         margin-bottom: 10px;
@@ -82,9 +112,15 @@
         z-index: 10;
     }
 
-    .vote_artist {
+    .subtext {
         color: rgba(255,255,255,.7);
         font-weight: normal;
+        font-size: 16px;
+    }
+
+    .trophy {
+        width: 16px;
+        height: 16px;
     }
 
     .vote_bar {

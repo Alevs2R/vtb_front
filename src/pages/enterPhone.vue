@@ -6,7 +6,7 @@
         </div>
         <f7-list form>
             <f7-list-input
-                    type="email"
+                    type="text"
                     placeholder="Введите номер телефона"
                     @input="phone = $event.target.value"
                     :value="phone"
