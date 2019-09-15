@@ -11,11 +11,10 @@
                     @input="phone = $event.target.value"
                     :value="phone"
             ></f7-list-input>
-            <div style="margin-left: 15px; margin-bottom: 10px">
-                <f7-button fill @click="signIn" style="margin-bottom: 10px">Отправить СМС</f7-button>
-                <f7-button @click="goBack">Назад</f7-button>
-                <f7-block-footer></f7-block-footer>
-            </div>
+            <f7-list>
+                <f7-list-button fill @click="signIn">Отправить СМС</f7-list-button>
+                <f7-list-button fill @click="goBack">Назад</f7-list-button>
+            </f7-list>
         </f7-list>
 
     </f7-page>

@@ -17,10 +17,10 @@
                     @input="password = $event.target.value"
                     :value="password"
             ></f7-list-input>
-            <div class="bottom-row">
-                <f7-button fill raised @click="signIn">Войти</f7-button>
-                <f7-button fill raised @click="enterByPhone">Войти по номеру телефона</f7-button>
-            </div>
+            <f7-list>
+                <f7-list-button fill @click="signIn">Войти</f7-list-button>
+                <f7-list-button fill @click="enterByPhone">Войти по номеру телефона</f7-list-button>
+            </f7-list>
         </f7-list>
     </f7-page>
 </template>
@@ -81,7 +81,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding-left: 15px;
+        padding: 0 15px;
     }
 
     .vtb-login {
