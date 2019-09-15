@@ -1,8 +1,8 @@
 export default class WebSocketHandler {
-    static eventSocketURL(roomId) {
+    static eventSocketURL() {
         return `${process.env.VUE_APP_WS_TYPE}://${process.env.VUE_APP_API_HOST}:${
             process.env.VUE_APP_WS_PORT
-        }/room/${roomId}`;
+        }/vote`;
     }
 
     constructor(store) {
@@ -22,6 +22,24 @@ export default class WebSocketHandler {
         this.url = url;
 
         this._initEvents();
+
+    }
+
+    send(message){
+        message  = JSON.stringify(message);
+        if (!this.websocket) this.reconnect()
+        if (this.websocket.readyState === 0)
+            this.reSend(message);
+        else this.websocket.send(message)
+    }
+
+    reSend(message){
+        setTimeout(()=>{
+            if (this.websocket.readyState !== 0) {
+                this.websocket.send(message);
+            }
+            else this.reSend(message)
+        },10)
     }
 
     checkConnection({ eventId, url }) {

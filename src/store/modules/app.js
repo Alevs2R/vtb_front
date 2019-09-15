@@ -131,7 +131,18 @@ const actions = {
       .catch((error) => {
         throw error
       })
+  },
+
+  vote({getters, commit}, {answerId, vote}) {
+    return axios
+      .get(`${URL}answer/vote/${answerId}/${vote}`, null, axiosConfig)
+      .then(({data}) => {
+      })
+      .catch((error) => {
+        throw error
+      })
   }
+
 };
 
 const mutations = {
