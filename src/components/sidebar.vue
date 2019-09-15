@@ -49,6 +49,7 @@
         this.$store.commit('setMode', value)
       },
       goToCreate() {
+        this.$f7.panel.close('.board-page-panel')
         this.$f7router.navigate({
           name: 'create room'
         });

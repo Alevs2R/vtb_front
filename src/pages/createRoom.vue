@@ -1,7 +1,7 @@
 <template>
     <f7-page class="board-page">
         <div>
-            <navbar></navbar>
+            <navbar is-back></navbar>
             <div class="container">
                 <h1 style="font-weight: normal; margin-left: 15px; margin-bottom: -10px">Создание голосования</h1>
                 <f7-list no-hairlines-md>

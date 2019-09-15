@@ -1,16 +1,18 @@
 <template>
     <f7-page>
-        <navbar is-back></navbar>
-        <div class="room-page">
-            <f7-block-title class="room-page-title">{{room.title}}</f7-block-title>
-            <f7-block strong>
-                <p>{{room.description}}</p>
-            </f7-block>
-            <div class="room-page-files">
-                <tags v-for="file in room.attachments" :key="file.id" :file="file"></tags>
-            </div>
-            <div class="room-page-polls">
-                <poll v-for="poll in room.votings" ></poll>
+        <div>
+            <navbar is-back></navbar>
+            <div class="room-page">
+                <f7-block-title class="room-page-title">{{room.title}}</f7-block-title>
+                <f7-block strong>
+                    <p>{{room.description}}</p>
+                </f7-block>
+                <div class="room-page-files">
+                    <tags v-for="file in room.attachments" :key="file.id" :file="file"></tags>
+                </div>
+                <div class="room-page-polls">
+                    <poll v-for="poll in room.votings" ></poll>
+                </div>
             </div>
         </div>
     </f7-page>
