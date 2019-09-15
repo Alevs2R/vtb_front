@@ -138,6 +138,22 @@ const actions = {
     commit("setAnswers", data)
   },
 
+  savePolls({getters, commit}, data) {
+    const axiosConfig = {
+      headers: getters["authPostHeader"]
+    };
+
+
+    return axios
+      .post(`${URL}savePolls`, data, axiosConfig)
+      .then(({data}) => {
+        return data
+      })
+      .catch((error) => {
+        throw error
+      })
+  }
+
 };
 
 const mutations = {
@@ -150,11 +166,11 @@ const mutations = {
     localStorage.setStorage(state.user, 'app')
   },
 
-  setRoom(state, data){
+  setRoom(state, data) {
     state.room = data
   },
 
-  isDesktop (state) {
+  isDesktop(state) {
     state.isDesktop = window.innerWidth >= 768
   },
 
@@ -163,11 +179,11 @@ const mutations = {
   },
 
   setCodeSent(state, data) {
-   // console.log('code sent '+data);
+    // console.log('code sent '+data);
     state.codeSent = data;
   },
 
-  setPhone(state,data) {
+  setPhone(state, data) {
     state.phone = data;
   },
   setSocket(state, value) {

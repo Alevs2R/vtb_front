@@ -9,14 +9,16 @@
                             label="Название голосования"
                             type="text"
                             placeholder="Введите название"
-                            v-model="title"
+                            :value="title"
+                            @input="title = $event.target.value"
                             clear-button
                     ></f7-list-input>
 
                     <f7-list-input
                             label="Описание повестки"
                             type="textarea"
-                            v-model="description"
+                            :value="description"
+                            @input="description = $event.target.value"
                             placeholder="Введите описание повестки"
                             clear-button
                     ></f7-list-input>
@@ -65,7 +67,7 @@
                 </div>
 
                 <div style="padding: 15px">
-                <div class="main_button" @click="">Сохранить голосование</div>
+                <div class="main_button" @click="savePolls">Сохранить голосование</div>
                 </div>
             </div>
         </div>
@@ -152,22 +154,37 @@
           this.$f7.dialog.alert("Выберите файл до 10Мб", "Ошибка");
         }
       },
+
       delFile(file){
         const indexDel = this.files.map((item) =>item.name).indexOf(file.name)
         this.files.splice(indexDel,1)
       },
+
       pushListPolls () {
         this.listPolls.push({
           id: this.listPolls[this.listPolls.length-1]+1,
           title: '',
           answers:[{
-            id:'',
             value:''
           }]
         })
       },
+
       pushAnswers(poll){
-        this.listPolls.map((item) =>item.id).indexOf(poll.id)
+        this.listPolls[this.listPolls.map((item) =>item.id).indexOf(poll.id)].answers.push({
+          value:''
+        })
+      },
+
+      savePolls() {
+        if (!this.title) return
+        this.$store.dispatch('savePolls', {
+          changeUsers: this.changeUsers,
+          title: this.title,
+          description: this.description,
+          files: this.files,
+          listPolls: this.listPolls
+        })
       }
     },
     created() {

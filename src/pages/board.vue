@@ -56,7 +56,7 @@
 
     created() {
       this.$store.dispatch('getRooms', {
-        user_id: 150,
+        user_id: this.$f7route.params.userId,
       })
     }
   }

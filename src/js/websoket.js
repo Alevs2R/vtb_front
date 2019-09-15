@@ -27,7 +27,6 @@ export default class WebSocketHandler {
 
     send(message){
         message  = JSON.stringify(message);
-        if (!this.websocket) this.reconnect()
         if (this.websocket.readyState === 0)
             this.reSend(message);
         else this.websocket.send(message)
