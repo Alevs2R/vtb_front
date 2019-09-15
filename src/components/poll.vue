@@ -1,6 +1,6 @@
 <template>
     <div class="block-poll">
-        <vote :votes="poll.answers" :title="poll.title" :total_votes="this.totalVotes" />
+        <vote :votes="poll.answers" :title="poll.title" :total_votes="this.totalVotes" :selected="selected" :changeVoteEx="changeVote" :cancel_vote="cancelVote" />
     </div>
 </template>
 
@@ -10,9 +10,24 @@
     name: "poll",
     props: ["poll"],
     components: {Vote},
+    data: () => ({
+      selected: null
+    }),
+    methods: {
+      changeVote(vote) {
+          this.selected = vote.id
+      },
+      cancelVote() {
+        this.selected = null;
+      }
+    },
     computed: {
       totalVotes() {
-        return this.poll.answers.reduce((accumulator, answer) => accumulator + answer.voted);
+        let sum = 0;
+        this.poll.answers.forEach(item => {
+          sum += item.voted;
+        });
+        return sum;
       }
     }
   }
