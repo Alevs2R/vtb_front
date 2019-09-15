@@ -1,6 +1,6 @@
 <template>
     <div class="block-poll">
-        <vote :votes="poll.answers" :title="poll.title" />
+        <vote :votes="poll.answers" :title="poll.title" :total_votes="this.totalVotes" />
     </div>
 </template>
 
@@ -10,6 +10,11 @@
     name: "poll",
     props: ["poll"],
     components: {Vote},
+    computed: {
+      totalVotes() {
+        return this.poll.answers.reduce((accumulator, answer) => accumulator + answer.voted);
+      }
+    }
   }
 </script>
 
