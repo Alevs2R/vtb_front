@@ -84,6 +84,18 @@ const actions = {
       })
   },
 
+  confirmRegister({getters, commit}, data) {
+    return axios
+      .post(`${URL}confirm`, data, axiosSimpleConfig)
+      .then(({data}) => {
+        commit("setUser", data);
+        return data
+      })
+      .catch((error) => {
+        throw error
+      })
+  },
+
   getRooms({getters, commit}, data) {
 
     const axiosConfig = {
@@ -93,7 +105,7 @@ const actions = {
     return axios
       .post(`${URL}rooms`, data, axiosConfig)
       .then(({data}) => {
-        commit("setEvents", data)
+        commit("setEvents", data);
         return data
       })
       .catch((error) => {

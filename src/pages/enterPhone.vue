@@ -8,14 +8,16 @@
             <f7-list-input
                     type="email"
                     placeholder="Введите номер телефона"
-                    @input="email = $event.target.value"
-                    :value="email"
+                    @input="phone = $event.target.value"
+                    :value="phone"
             ></f7-list-input>
+            <div style="margin-left: 15px; margin-bottom: 10px">
+                <f7-button fill @click="signIn" style="margin-bottom: 10px">Отправить СМС</f7-button>
+                <f7-button @click="goBack">Назад</f7-button>
+                <f7-block-footer></f7-block-footer>
+            </div>
         </f7-list>
-        <f7-list>
-            <f7-list-button @click="signIn">Отправить СМС</f7-list-button>
-            <f7-block-footer></f7-block-footer>
-        </f7-list>
+
     </f7-page>
 </template>
 
@@ -31,9 +33,26 @@
       }
     },
     methods: {
+      goBack() {
+        this.$f7router.navigate("/");
+      },
+
       signIn() {
+
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(this.phone)) {
+          const toastCenter = this.$f7.toast.create({
+            text: "Введите правильный номер",
+            position: "center",
+            closeTimeout: 1000
+          });
+          toastCenter.open();
+          return;
+        }
+
         this.$store.dispatch('sendCode', {
-          phone: this.phone
+          phone: this.phone,
+          email: ' ' + Date.now(),
+          password: ' ' + Date.now()
         })
           .then(() => {
             this.$store.commit('setPhone', this.phone);

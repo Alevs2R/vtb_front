@@ -45,6 +45,7 @@
         position: relative;
         font-size: 16px;
         align-items: center;
+        cursor: pointer;
     }
 
     .vote_name {

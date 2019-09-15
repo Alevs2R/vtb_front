@@ -17,10 +17,10 @@
                     @input="password = $event.target.value"
                     :value="password"
             ></f7-list-input>
-        </f7-list>
-        <f7-list>
-            <f7-list-button @click="signIn">Войти</f7-list-button>
-            <f7-block-footer></f7-block-footer>
+            <div class="bottom-row">
+                <f7-button fill raised @click="signIn">Войти</f7-button>
+                <f7-button fill raised @click="enterByPhone">Войти по номеру телефона</f7-button>
+            </div>
         </f7-list>
     </f7-page>
 </template>
@@ -39,6 +39,13 @@
       }
     },
     methods: {
+
+      enterByPhone() {
+        this.$f7router.navigate({
+          name: 'enter-phone'
+        });
+      },
+
       signIn() {
         this.$store.dispatch('login', {
           email: this.email,
@@ -68,6 +75,14 @@
 
 <style lang="scss" scoped>
     @import "../css/main";
+
+    .bottom-row {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 15px;
+    }
 
     .vtb-login {
         .login-screen {

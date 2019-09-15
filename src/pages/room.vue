@@ -80,7 +80,7 @@
         margin: 30px auto;
         background: white;
         border-radius: 5px;
-        padding: 10px 30px;
+        padding: 10px 30px 30px;
 
         &-title {
             font-size: 26px;
