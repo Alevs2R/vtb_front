@@ -17,3 +17,18 @@ $light-grey-color: #F5F5F5;
     color: white;
   }
 }
+
+.main_button {
+  cursor: pointer;
+  background: $main-color;
+  color: white;
+  line-height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  display: inline-block;
+  height: 40px;
+  padding: 0 20px;
+  &:hover {
+    background: darken($main-color, 10%);
+  }
+}

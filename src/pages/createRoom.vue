@@ -3,7 +3,7 @@
         <div>
             <navbar></navbar>
             <div class="container">
-                <h1 style="font-weight: normal; margin-left: 15px">Создание голосования</h1>
+                <h1 style="font-weight: normal; margin-left: 15px; margin-bottom: -10px">Создание голосования</h1>
                 <f7-list no-hairlines-md>
                     <f7-list-input
                             label="Название голосования"
@@ -43,12 +43,11 @@
                     <f7-row>
                         <f7-col width="100" tablet-width="50" desktop-width="50">
                             <div class="voting">
-                                <f7-input
+                                <input
                                         type="text"
                                         placeholder="Ваш вопрос"
-                                        clear-button
-                                        size="18"
-                                ></f7-input>
+                                        class="myinput"
+                                />
                                 <div style="font-size: 12px; margin: 20px 0 10px">Варианты ответа</div>
                                 <CreateVoteOption />
                                 <CreateVoteOption />
@@ -56,10 +55,56 @@
                                 <div class="light_button" style="width: 250px" @click="">Добавить вариант ответа</div>
                             </div>
                         </f7-col>
+                        <f7-col width="100" tablet-width="50" desktop-width="50">
+                            <div class="light_button" style="width: 200px" @click="">Добавить вопрос</div>
+                        </f7-col>
                     </f7-row>
+                </div>
+                <div style="padding: 15px;">
+                    <div class="light_button" style="width: 200px" @click="">Выбрать участников</div>
+                </div>
+
+                <div style="padding: 15px">
+                <div class="main_button" @click="">Сохранить голосование</div>
                 </div>
             </div>
         </div>
+        <f7-popup class="demo-popup" :opened="peoplePopupOpened" @popup:closed="peoplePopupOpened = false">
+            <f7-page>
+                <f7-navbar title="Выбор участников">
+                    <f7-nav-right>
+                        <f7-link popup-close>Закрыть</f7-link>
+                    </f7-nav-right>
+                </f7-navbar>
+                <f7-block>
+                    <f7-block-title>Участники</f7-block-title>
+                    <f7-block strong>
+                        <f7-chip text="Example Chip" deleteable @click="deleteChip"></f7-chip>
+                        <f7-chip text="Chris" media="C" media-bg-color="orange" text-color="black" deleteable @click="deleteChip"></f7-chip>
+                        <f7-chip text="Jane Doe" deleteable @click="deleteChip">
+                            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
+                        </f7-chip>
+                        <f7-chip text="One More Chip" deleteable @click="deleteChip"></f7-chip>
+                        <f7-chip text="Jennifer" media-bg-color="pink" media="J" deleteable @click="deleteChip"></f7-chip>
+                        <f7-chip text="Adam Smith" deleteable @click="deleteChip">
+                            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
+                        </f7-chip>
+                    </f7-block>
+                    <f7-block-title>Выберите из списка</f7-block-title>
+                    <f7-list>
+                        <f7-list-item link="#" title="Ivan Petrov" after="CEO">
+                            <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
+                        </f7-list-item>
+                        <f7-list-item link="#" title="John Doe" after="Cleaner">
+                            <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
+                        </f7-list-item>
+                        <f7-list-item link="#" title="Jenna Smith">
+                            <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
+                        </f7-list-item>
+                    </f7-list>
+                </f7-block>
+            </f7-page>
+        </f7-popup>
     </f7-page>
 </template>
 
@@ -75,7 +120,8 @@
     name: "create room",
     data() {
       return {
-        Attachment, Multiply
+        Attachment, Multiply,
+        peoplePopupOpened: true,
       };
     },
     created() {
@@ -156,4 +202,10 @@
         border: 1px solid #DCDBDB;
         padding: 20px 15px;
     }
+
+    .myinput {
+        font-size: 18px;
+        width: 100%!important;
+    }
+
 </style>
