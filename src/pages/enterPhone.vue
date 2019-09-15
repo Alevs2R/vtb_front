@@ -7,53 +7,41 @@
         <f7-list form>
             <f7-list-input
                     type="email"
-                    placeholder="Введите корпоративную почту"
+                    placeholder="Введите номер телефона"
                     @input="email = $event.target.value"
                     :value="email"
             ></f7-list-input>
-            <f7-list-input
-                    type="password"
-                    placeholder="Введите пароль"
-                    @input="password = $event.target.value"
-                    :value="password"
-            ></f7-list-input>
         </f7-list>
         <f7-list>
-            <f7-list-button @click="signIn">Войти</f7-list-button>
+            <f7-list-button @click="signIn">Отправить СМС</f7-list-button>
             <f7-block-footer></f7-block-footer>
         </f7-list>
     </f7-page>
 </template>
 
 <script>
-  import mapGetters from 'vuex'
   import vtbLogo from "../components/vtbLogo";
 
   export default {
-    name: "main",
+    name: "enter-phone",
     components: {vtbLogo},
     data() {
       return {
-        email: '',
-        password: ''
+        phone: '',
       }
     },
     methods: {
       signIn() {
-        this.$store.dispatch('login', {
-          email: this.email,
-          password: this.password
+        this.$store.dispatch('sendCode', {
+          phone: this.phone
         })
-          .then((data) => {
+          .then(() => {
+            this.$store.commit('setPhone', this.phone);
             this.$f7router.navigate({
-              name: 'user',
-              params: {
-                userId: data.user_id
-              }
+              name: 'register'
             });
-            return
           })
-          .catch((error) => {
+          .catch(() => {
             var toastCenter = this.$f7.toast.create({
               text: "Проблемы с подключением к интернету",
               position: "center",

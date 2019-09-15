@@ -10,9 +10,12 @@
                 <div class="room-page-files">
                     <tags v-for="file in room.attachments" :key="file.id" :file="file"></tags>
                 </div>
-                <div class="room-page-polls">
-                    <poll v-for="poll in room.votings" ></poll>
-                </div>
+                <f7-row>
+                    <f7-col width="100" tablet-width="50" desktop-width="50" v-for="poll in room.votings"
+                            :key="poll.id">
+                        <poll :poll="poll"></poll>
+                    </f7-col>
+                </f7-row>
             </div>
         </div>
     </f7-page>
@@ -21,33 +24,33 @@
 <script>
   import Navbar from "../components/navbar";
   import Tags from "../components/tags";
-  import {mapState} from 'vuex'
+  import { mapState } from "vuex";
   import Poll from "../components/poll";
+
+
   export default {
     name: "room",
-    components: {Poll, Tags, Navbar},
-    data () {
-      return {
-
-      }
+    components: { Poll, Tags, Navbar },
+    data() {
+      return {};
     },
     computed: {
-      ...mapState(['room'])
+      ...mapState(["room"])
     },
-    created () {
-      this.$store.dispatch('getRoom', {
-        id: this.$f7route.params.roomId,
-      })
+    created() {
+      this.$store.dispatch("getRoom", {
+        id: this.$f7route.params.roomId
+      });
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
-    .room-page{
+    .room-page {
         padding: 0 10px;
         margin-bottom: 50px;
 
-        &-title{
+        &-title {
             font-size: 24px;
             color: black;
             font-weight: 500;

@@ -7,30 +7,23 @@
         <f7-list form>
             <f7-list-input
                     type="email"
-                    placeholder="Введите корпоративную почту"
+                    placeholder="Введите номер телефона"
                     @input="email = $event.target.value"
                     :value="email"
             ></f7-list-input>
-            <f7-list-input
-                    type="password"
-                    placeholder="Введите пароль"
-                    @input="password = $event.target.value"
-                    :value="password"
-            ></f7-list-input>
         </f7-list>
         <f7-list>
-            <f7-list-button @click="signIn">Войти</f7-list-button>
+            <f7-list-button @click="signIn">Отправить СМС</f7-list-button>
             <f7-block-footer></f7-block-footer>
         </f7-list>
     </f7-page>
 </template>
 
 <script>
-  import mapGetters from 'vuex'
   import vtbLogo from "../components/vtbLogo";
 
   export default {
-    name: "main",
+    name: "register",
     components: {vtbLogo},
     data() {
       return {
@@ -51,7 +44,6 @@
                 userId: data.user_id
               }
             });
-            return
           })
           .catch((error) => {
             var toastCenter = this.$f7.toast.create({

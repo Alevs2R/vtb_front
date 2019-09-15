@@ -1,13 +1,13 @@
 <template>
     <div class="votes">
+        <div class="poll_title">{{ title }}</div>
         <div v-for="vote in votes" :key="vote.id" class="vote_wrapper" v-on="{click: selected == vote.id ? () => { cancel_vote(vote) } : () => {}}">
             <div
                     class="vote_bar"
                     :style="[ bar_animate ?  { width: Math.round((vote.count / total_votes) * 100) + '%' } : {}]"
             ></div>
             <div class="vote_left">
-                <div class="vote_name">{{ vote.title}}</div>
-                <div class="vote_artist">{{ vote.name}}</div>
+                <div class="vote_name">{{ vote.value}}</div>
             </div>
             <div class="vote_result">
                 <i class="f7-icons" v-if="selected == vote.id">check</i>
@@ -19,7 +19,7 @@
 
 <script>
   export default {
-    props: ["votes", "selected", "total_votes", "cancel_vote"],
+    props: ["votes", "selected", "total_votes", "cancel_vote", "title"],
     data: () => ({
       bar_animate: false
     }),
@@ -30,6 +30,9 @@
 </script>
 
 <style scoped>
+    .votes {
+        padding: 10px 20px 20px;
+    }
     .vote_wrapper {
         background: rgba(0, 0, 0, 0.2);
         padding: 10px 10px;
@@ -40,7 +43,7 @@
         border-radius: 6px;
         justify-content: space-between;
         position: relative;
-        font-size: 1.2rem;
+        font-size: 16px;
         align-items: center;
     }
 
@@ -71,6 +74,12 @@
         z-index: 5;
         transition: width ease-out 0.3s;
         width: 0;
+    }
+
+    .poll_title {
+        font-size: 18px;
+        color: white;
+        margin: 10px 0;
     }
 
 </style>

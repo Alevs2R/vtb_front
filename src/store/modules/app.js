@@ -17,7 +17,9 @@ const initialState = () => ({
   events: [],
   room: {},
   isDesktop: true,
-  mode: 'active'
+  mode: 'active',
+  codeSent: false,
+  phone: ''
 });
 
 const state = initialState();
@@ -63,6 +65,18 @@ const actions = {
       .post(`${URL}login`, data, axiosSimpleConfig)
       .then(({data}) => {
         commit("setUser", data)
+        return data
+      })
+      .catch((error) => {
+        throw error
+      })
+  },
+
+  sendCode({getters, commit}, data) {
+    return axios
+      .post(`${URL}register`, data, axiosSimpleConfig)
+      .then(({data}) => {
+        commit("setCodeSent", true);
         return data
       })
       .catch((error) => {
@@ -124,6 +138,15 @@ const mutations = {
 
   setMode(state, value) {
     state.mode = value
+  },
+
+  setCodeSent(state, data) {
+   // console.log('code sent '+data);
+    state.codeSent = data;
+  },
+
+  setPhone(state,data) {
+    state.phone = data;
   }
 };
 
