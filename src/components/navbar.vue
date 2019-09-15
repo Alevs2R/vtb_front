@@ -9,8 +9,9 @@
                 >chevrone_left</i>
             </f7-nav-left>
             <f7-nav-title style="padding-left: 10px;color: white;">Голосования</f7-nav-title>
-            <f7-nav-right v-if="!isDesktop">
+            <f7-nav-right>
                 <f7-button
+                        v-if="!isDesktop"
                         raised panel-open="right"
                 >
                     <i class="f7-icons"

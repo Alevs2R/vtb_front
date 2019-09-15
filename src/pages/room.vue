@@ -41,12 +41,9 @@
 </script>
 
 <style lang="scss" scoped>
-    .page.page-current {
-        overflow: scroll !important;
-    }
-
     .room-page{
         padding: 0 10px;
+        margin-bottom: 50px;
 
         &-title{
             font-size: 24px;
@@ -59,6 +56,7 @@
             display: flex;
             flex-wrap: wrap;
             width: 100%;
+            margin-bottom: 30px;
         }
 
         &-polls {
