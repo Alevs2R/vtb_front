@@ -1,9 +1,10 @@
 <template>
     <div>
         <f7-navbar  class="board-page-navbar">
-            <f7-nav-left v-if="isBack">
-                <i class="f7-icons"
-                   style="padding-left:10px;color: white;cursor:pointer;"
+            <f7-nav-left >
+                <i v-if="isBack"
+                   class="f7-icons"
+                   style="padding-left:10px;color: white;cursor:pointer;min-width: 10px"
                    @click="back"
                 >chevrone_left</i>
             </f7-nav-left>

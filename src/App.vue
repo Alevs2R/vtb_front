@@ -11,7 +11,7 @@
 
   import {mapGetters} from "vuex";
   import routes from "./router/index";
-  import localStorage from "./js/localStorage";
+  import localsStorage from "./js/localStorage";
 
   export default {
     data() {
@@ -40,7 +40,7 @@
       window.addEventListener('resize', () => {
         this.$store.commit('isDesktop')
       })
-      if(localStorage.getStorage('app') && localStorage.getStorage('app').access_token)
+      if(localsStorage.getStorage('app') && localsStorage.getStorage('app').access_token)
         this.$store.dispatch('autorization')
     }
   };
