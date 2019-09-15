@@ -101,13 +101,11 @@ export default class WebSocketHandler {
 
     _onOpen(event) {
         console.log(event);
-        this.store.commit("SOCKET_OPENED", { event });
-        this.retriesAvailable = 5;
+        this.retriesAvailable = 3;
     }
 
     _onClose(event) {
         console.log(event);
-        this.store.commit("SOCKET_CLOSED", { event });
 
         if (event.code !== 1000) this.reconnect();
     }

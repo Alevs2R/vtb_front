@@ -1,7 +1,13 @@
 <template>
     <div class="votes">
         <div class="poll_title">{{ title }}</div>
-        <div v-for="vote in votes" :key="vote.id" class="vote_wrapper" v-on="{click: selected == vote.id ? () => { cancel_vote(vote) } : () => {}}">
+        <div
+                v-for="vote in votes"
+                :key="vote.id"
+                class="vote_wrapper"
+                v-on="{click: selected == vote.id ? () => { cancel_vote(vote) } : () => {}}"
+                @click="changeVote(vote)"
+        >
             <div
                     class="vote_bar"
                     :style="[ bar_animate ?  { width: Math.round((vote.count / total_votes) * 100) + '%' } : {}]"
@@ -18,11 +24,25 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   export default {
     props: ["votes", "selected", "total_votes", "cancel_vote", "title"],
+    computed:{ ...mapState(["socket"])},
     data: () => ({
       bar_animate: false
     }),
+    methods: {
+      changeVote(vote){
+        this.socket.send({
+          type: 'vote',
+          room_id: this.$f7route.params.roomId,
+          user_id: this.$store.state.user.user_id,
+          answer_id: vote.id,
+          increment: 1
+        })
+      }
+    },
     mounted() {
       setTimeout(() => { this.bar_animate = true }, 1);
     }
@@ -32,6 +52,7 @@
 <style scoped>
     .votes {
         padding: 10px 20px 20px;
+        margin-bottom: 10px;
     }
     .vote_wrapper {
         background: rgba(0, 0, 0, 0.2);
@@ -45,6 +66,7 @@
         position: relative;
         font-size: 16px;
         align-items: center;
+        cursor: pointer;
     }
 
     .vote_name {

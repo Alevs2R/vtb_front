@@ -57,14 +57,15 @@
         id: this.$f7route.params.roomId,
       })
 
-      this.socket = new WebSocketHandler(this.$store);
+      const socket = new WebSocketHandler(this.$store);
       const url = WebSocketHandler.eventSocketURL();
-      this.socket.connect(url);
-      this.socket.send({
+      socket.connect(url);
+      socket.send({
         type: 'join',
         room_id: this.$f7route.params.roomId,
         user_id: this.$store.state.user.user_id
       })
+      this.$store.commit('setSocket', socket)
     }
   };
 </script>
