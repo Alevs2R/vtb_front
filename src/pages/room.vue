@@ -36,8 +36,9 @@
 <script>
   import Navbar from "../components/navbar";
   import Tags from "../components/tags";
-  import { mapState } from "vuex";
   import Poll from "../components/poll";
+  import {mapState} from 'vuex'
+  import WebSocketHandler from ".././js/websoket"
   import EditIcon from "../assets/edit.svg";
   import PeopleIcon from "../assets/group.svg"
 
@@ -51,10 +52,19 @@
     computed: {
       ...mapState(["room"])
     },
-    created() {
-      this.$store.dispatch("getRoom", {
-        id: this.$f7route.params.roomId
-      });
+    created () {
+      this.$store.dispatch('getRoom', {
+        id: this.$f7route.params.roomId,
+      })
+
+      this.socket = new WebSocketHandler(this.$store);
+      const url = WebSocketHandler.eventSocketURL();
+      this.socket.connect(url);
+      this.socket.send({
+        type: 'join',
+        room_id: this.$f7route.params.roomId,
+        user_id: this.$store.state.user.user_id
+      })
     }
   };
 </script>
