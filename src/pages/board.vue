@@ -1,25 +1,12 @@
 <template>
     <f7-page class="board-page">
-        <div>
-            <f7-navbar  class="board-page-navbar">
-                <f7-nav-title style="padding-left: 10px;color: white;">Голосования</f7-nav-title>
-                <f7-nav-right v-if="!isDesktop">
-                    <f7-button
-                            raised panel-open="right"
-                    >
-                        <i class="f7-icons"
-                           style="color: white;cursor:pointer;">bars</i>
-                    </f7-button>
-                </f7-nav-right>
-            </f7-navbar>
-        </div>
+        <navbar></navbar>
         <f7-panel right resizable>
             <f7-view>
                 <right-menu
                         :user="user"
                         :countActive="activeEvents.length"
                 >
-
                 </right-menu>
             </f7-view>
         </f7-panel>
@@ -43,10 +30,11 @@
   import RoomItemList from "../components/roomItemList";
   import Sidebar from "../components/sidebar";
   import RightMenu from "../components/rightMenu";
+  import Navbar from "../components/navbar";
 
   export default {
     name: "board",
-    components: {RightMenu, Sidebar, RoomItemList },
+    components: {Navbar, RightMenu, Sidebar, RoomItemList },
     data () {
       return {
       }
@@ -81,21 +69,6 @@
 
     .board-page {
         background: $main-background;
-
-        &-navbar {
-            background: $main-color;
-
-            .button  {
-                border: none;
-                color: transparent;
-                border-radius: 0;
-                line-height: 0;
-                height: 29px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
     }
 
     .container {
