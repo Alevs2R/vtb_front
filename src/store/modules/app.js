@@ -162,6 +162,19 @@ const actions = {
       .catch((error) => {
         throw error
       })
+  },
+
+  uploadFiles({getters, commit}, materials){
+
+    const axiosConfig = {
+      headers: getters["authPostHeader"]
+    };
+
+    return axios
+      .post(`${URL}upload`, materials, axiosConfig)
+      .then(({ data }) => {
+
+      })
   }
 
 };
@@ -201,7 +214,7 @@ const mutations = {
   },
 
   setAnswers(state, value) {
-    state.room.votings = value
+    state.room.votings = value.votings
   }
 };
 

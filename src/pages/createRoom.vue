@@ -48,11 +48,14 @@
                                         type="text"
                                         placeholder="Ваш вопрос"
                                         class="myinput"
+                                        @change="poll.title = $event.target.value"
                                 />
                                 <div style="font-size: 12px; margin: 20px 0 10px">Варианты ответа</div>
                                 <CreateVoteOption
-                                        v-for="answers in poll.answers"
-                                        :key="answers.id"
+                                        v-for="answer in poll.answers"
+                                        :key="answer.id"
+                                        @change="setAnswer"
+                                        @done="pushAnswersValue(poll.id, answer.id)"
                                 />
                                 <div class="light_button" style="width: 250px" @click="pushAnswers(poll)">Добавить вариант ответа</div>
                             </div>
@@ -144,6 +147,7 @@
         files:[],
         startTime: '',
         endTime: '',
+        answer:'',
         listPolls: [{
           id: 1,
           title: '',
@@ -180,26 +184,57 @@
         this.files.splice(indexDel,1)
       },
 
+      setAnswer(value) {
+        this.answer = value
+      },
+
       pushListPolls () {
+
         this.listPolls.push({
-          id: this.listPolls[this.listPolls.length-1]+1,
+          id: this.listPolls[this.listPolls.length-1].id + 1,
           title: '',
           answers:[{
-            value:''
+            value:'',
+            id: 1,
           }]
         })
       },
 
-      pushAnswers(poll){
-        this.listPolls[this.listPolls.map((item) =>item.id).indexOf(poll.id)].answers.push({
-          value:''
+      pushAnswers(poll) {
+        let item = this.listPolls.map((item) =>item.id).indexOf(poll.id);
+        let arrayList = this.listPolls[item].answers
+        arrayList.push({
+          value: '',
+          id: arrayList[arrayList.length-1].id + 1
         })
+        this.listPolls = arrayList;
+      },
+
+      pushAnswersValue(pollId, answerId) {
+        let item = this.listPolls.map((item) => item.id).indexOf(pollId)
+        let arrayList = this.listPolls[item].answers
+        arrayList[answerId] = this.answer
+        this.listPolls[item].answers = arrayList
+        console.log(this.listPolls)
+      },
+
+      uploadFiles() {
+        let material = new FormData();
+        material.append("files", this.files)
+        this.$store.dispatch('uploadFiles', material)
       },
 
       saveRoom() {
-        if (!this.title && !this.startTime && !this.endTime ) return
+        if (!this.title && !this.startTime && !this.endTime ) {
+          var toastCenter = this.$f7.toast.create({
+            text: "Заполните все поля",
+            position: "center",
+            closeTimeout: 1000
+          });
+          toastCenter.open();
+        }
         this.$store.dispatch('savePolls', {
-          changeUsers: this.changeUsers,
+          usrs: this.changeUsers,
           title: this.title,
           description: this.description,
           listPolls: this.listPolls,
@@ -207,6 +242,7 @@
           end_time: moment().hour(this.endTime).valueOf()
         })
           .then(()=>{
+            this.uploadFiles()
             this.$f7router.back();
           })
           .catch(()=>{

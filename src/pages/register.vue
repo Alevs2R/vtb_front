@@ -53,7 +53,7 @@
             this.$f7router.navigate({
               name: 'user',
               params: {
-                userId: data.user_id
+                userId: 150
               }
             });
           })

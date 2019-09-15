@@ -48,14 +48,14 @@
 
       signIn() {
         this.$store.dispatch('login', {
-          email: this.email,
-          password: this.password
+          email: 'user1',
+          password: 'user1'
         })
           .then((data) => {
             this.$f7router.navigate({
               name: 'user',
               params: {
-                userId: data.user_id
+                userId: 150
               }
             });
             return

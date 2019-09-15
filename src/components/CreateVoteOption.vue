@@ -1,6 +1,6 @@
 <template>
     <div class="option">
-        <input @change="$emit('change', value)" type="text" style="width: 100%" v-model="value"/>
+        <input @input="getUp" type="text" style="width: 100%" v-model="value"/>
         <div
                 @click="value=''"
                 class="option-cross">
@@ -20,6 +20,12 @@
         value: ''
       };
     },
+    methods: {
+      getUp () {
+        this.$emit('change', this.value)
+        this.$emit('done')
+      }
+    }
   };
 </script>
 
