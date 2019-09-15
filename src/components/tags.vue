@@ -40,7 +40,8 @@
         height: 40px;
         border-radius: 5px;
         background: #F5F5F5;
-        margin: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
         cursor: pointer;
 
         &:hover {

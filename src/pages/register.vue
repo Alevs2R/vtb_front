@@ -7,13 +7,18 @@
         <f7-list form>
             <f7-list-input
                     type="email"
-                    placeholder="Введите номер телефона"
-                    @input="email = $event.target.value"
-                    :value="email"
+                    placeholder="Введите полученный код"
+                    @input="code = $event.target.value"
+                    :value="code"></f7-list-input>
+            <f7-list-input
+                    type="email"
+                    placeholder="Введите ваше имя"
+                    @input="name = $event.target.value"
+                    :value="name"
             ></f7-list-input>
         </f7-list>
         <f7-list>
-            <f7-list-button @click="signIn">Отправить СМС</f7-list-button>
+            <f7-list-button @click="signIn">Войти</f7-list-button>
             <f7-block-footer></f7-block-footer>
         </f7-list>
     </f7-page>
@@ -27,15 +32,22 @@
     components: {vtbLogo},
     data() {
       return {
+        name: '',
+        surname: '',
+        code: '',
         email: '',
-        password: ''
+        password: '',
       }
     },
     methods: {
       signIn() {
-        this.$store.dispatch('login', {
-          email: this.email,
-          password: this.password
+        this.$store.dispatch('confirmRegister', {
+          code: this.code,
+          first_name: this.name,
+          email: ' ' + Date.now(),
+          password: ' ' + Date.now(),
+          second_name: ' ' + Date.now(),
+          phone: this.$store.state.phone
         })
           .then((data) => {
             this.$f7router.navigate({
@@ -45,7 +57,7 @@
               }
             });
           })
-          .catch((error) => {
+          .catch(() => {
             var toastCenter = this.$f7.toast.create({
               text: "Проблемы с подключением к интернету",
               position: "center",
