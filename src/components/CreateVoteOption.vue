@@ -1,8 +1,10 @@
 <template>
     <div class="option">
-        <input @change="$emit('change', value)" type="text" v-model="value" />
-        <div class="option-cross">
-            <img :src="Multiply" />
+        <input @change="$emit('change', value)" type="text" style="width: 100%" v-model="value"/>
+        <div
+                @click="value=''"
+                class="option-cross">
+            <img :src="Multiply"/>
         </div>
     </div>
 </template>
@@ -36,9 +38,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+
         input {
             height: 35px;
         }
+
         &-cross {
             float: right;
             background: $gray-color;
@@ -51,6 +55,7 @@
             align-items: center;
             flex-direction: row;
             cursor: pointer;
+
             img {
                 width: 12px;
                 height: 12px;

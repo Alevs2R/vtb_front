@@ -48,8 +48,11 @@
                                         class="myinput"
                                 />
                                 <div style="font-size: 12px; margin: 20px 0 10px">Варианты ответа</div>
-                                <CreateVoteOption  v-for="ansewrs in poll"/>
-                                <div class="light_button" style="width: 250px" @click="">Добавить вариант ответа</div>
+                                <CreateVoteOption
+                                        v-for="answers in poll.answers"
+                                        :key="answers.id"
+                                />
+                                <div class="light_button" style="width: 250px" @click="pushAnswers(poll)">Добавить вариант ответа</div>
                             </div>
                         </f7-col>
                         <f7-col width="100" tablet-width="50" desktop-width="50">
@@ -78,6 +81,7 @@
                     <f7-block strong>
                         <f7-chip
                                 v-for="chuser in changeUsers"
+                                :key="chuser.id"
                                 :text="getFullName(chuser.firstName, chuser.secondName)"
                                 deleteable @click="deleteChip(chuser)"></f7-chip>
                     </f7-block>
@@ -85,6 +89,7 @@
                     <f7-list>
                         <f7-list-item v-for="user in users"
                                       link="#"
+                                      :key="user.id"
                                       :title="getFullName(user.firstName, user.secondName)"
                                       :after="user.role"
                                       @click="changePersons(user)"
@@ -117,7 +122,14 @@
         title: '',
         description: '',
         files:[],
-        listPolls: []
+        listPolls: [{
+          id: 1,
+          title: '',
+          answers:[{
+            value:'',
+            id: 1
+          }]
+        }]
       };
     },
     methods: {
@@ -146,11 +158,16 @@
       },
       pushListPolls () {
         this.listPolls.push({
+          id: this.listPolls[this.listPolls.length-1]+1,
           title: '',
           answers:[{
+            id:'',
             value:''
           }]
         })
+      },
+      pushAnswers(poll){
+        this.listPolls.map((item) =>item.id).indexOf(poll.id)
       }
     },
     created() {

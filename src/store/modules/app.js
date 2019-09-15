@@ -19,7 +19,8 @@ const initialState = () => ({
   isDesktop: true,
   mode: 'active',
   codeSent: false,
-  phone: ''
+  phone: '',
+  socket: ''
 });
 
 const state = initialState();
@@ -145,15 +146,9 @@ const actions = {
       })
   },
 
-  vote({getters, commit}, {answerId, vote}) {
-    return axios
-      .get(`${URL}answer/vote/${answerId}/${vote}`, null, axiosConfig)
-      .then(({data}) => {
-      })
-      .catch((error) => {
-        throw error
-      })
-  }
+  SOCKET_VOTES({getters, commit}, {data}) {
+    commit("setAnswers", data)
+  },
 
 };
 
@@ -186,6 +181,13 @@ const mutations = {
 
   setPhone(state,data) {
     state.phone = data;
+  },
+  setSocket(state, value) {
+    state.socket = value
+  },
+
+  setAnswers(state, value) {
+    state.room.votings = value
   }
 };
 
