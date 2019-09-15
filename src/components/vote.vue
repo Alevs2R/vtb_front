@@ -10,14 +10,14 @@
         >
             <div
                     class="vote_bar"
-                    :style="[ bar_animate ?  { width: Math.round((vote.count / total_votes) * 100) + '%' } : {}]"
+                    :style="[ bar_animate ?  { width: Math.round((vote.voted / total_votes) * 100) + '%' } : {}]"
             ></div>
             <div class="vote_left">
                 <div class="vote_name">{{ vote.value}}</div>
             </div>
             <div class="vote_result">
                 <i class="f7-icons" v-if="selected == vote.id">check</i>
-                {{ vote.count }}
+                {{ vote.voted }}
             </div>
         </div>
     </div>
