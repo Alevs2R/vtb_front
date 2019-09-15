@@ -47,8 +47,7 @@
       listEvents () {
         switch (this.mode) {
           case 'past':
-            return this.pastEvents
-            break
+            return this.pastEvents;
           case 'active':
             return this.activeEvents
         }

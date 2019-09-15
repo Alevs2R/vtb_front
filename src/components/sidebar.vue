@@ -11,7 +11,7 @@
             <div :class="{'event_section':true, 'active': active === 'past'}"  @click="changeList('past')">Прошедшие</div>
         </div>
         <div class="create_btn_container">
-            <div class="light_button" style="width: 60%">Создать</div>
+            <div class="light_button" style="width: 60%" @click="goToCreate">Создать</div>
         </div>
     </div>
 </template>
@@ -45,8 +45,13 @@
 
     methods: {
       changeList(value) {
-        this.active = value
+        this.active = value;
         this.$store.commit('setMode', value)
+      },
+      goToCreate() {
+        this.$f7router.navigate({
+          name: 'create room'
+        });
       }
     }
   };
