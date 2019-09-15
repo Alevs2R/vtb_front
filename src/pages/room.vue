@@ -1,6 +1,6 @@
 <template>
     <f7-page class="room-page">
-        <navbar back></navbar>
+        <navbar is-back></navbar>
         <f7-block-title class="room-page-title">{{room.title}}</f7-block-title>
         <f7-block strong>
             <p>{{room.description}}</p>

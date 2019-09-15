@@ -1,7 +1,7 @@
 <template>
     <div>
         <f7-navbar  class="board-page-navbar">
-            <f7-nav-left v-if="back">
+            <f7-nav-left v-if="isBack">
                 <i class="f7-icons"
                    style="padding-left:10px;color: white;cursor:pointer;"
                    @click="back"
@@ -25,7 +25,7 @@
   export default {
     name: "navbar",
     props:{
-      back: {
+      isBack: {
         type: Boolean,
         default: false
       }
