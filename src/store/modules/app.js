@@ -154,10 +154,8 @@ const actions = {
     const axiosConfig = {
       headers: getters["authPostHeader"]
     };
-
-
     return axios
-      .post(`${URL}savePolls`, data, axiosConfig)
+      .post(`${URL}room/save`, data, axiosConfig)
       .then(({data}) => {
         return data
       })

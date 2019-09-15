@@ -15,7 +15,7 @@
                     ></f7-list-input>
 
                     <f7-list-input
-                            label="Описание повестки"
+                            label="Описание голосования"
                             type="textarea"
                             :value="description"
                             @input="description = $event.target.value"
@@ -65,9 +65,26 @@
                 <div style="padding: 15px;">
                     <div class="light_button" style="width: 200px" @click="peoplePopupOpened = true">Выбрать участников</div>
                 </div>
-
+                <f7-list no-hairlines-md>
+                    <f7-list-input
+                            label="Начало голосования"
+                            type="text"
+                            placeholder="Введите время"
+                            :value="startTime"
+                            @input="startTime = $event.target.value"
+                            clear-button
+                    ></f7-list-input>
+                    <f7-list-input
+                            label="Конец голосования"
+                            type="text"
+                            placeholder="Введите время"
+                            :value="endTime"
+                            @input="endTime = $event.target.value"
+                            clear-button
+                    ></f7-list-input>
+                </f7-list>
                 <div style="padding: 15px">
-                <div class="main_button" @click="savePolls">Сохранить голосование</div>
+                <div class="main_button" @click="saveRoom">Сохранить голосование</div>
                 </div>
             </div>
         </div>
@@ -110,6 +127,7 @@
   import Attachment from "../assets/attachment.svg";
   import Multiply from "../assets/multiply.svg";
   import CreateVoteOption from "../components/CreateVoteOption";
+  import moment from 'moment'
 
 
   export default {
@@ -124,6 +142,8 @@
         title: '',
         description: '',
         files:[],
+        startTime: '',
+        endTime: '',
         listPolls: [{
           id: 1,
           title: '',
@@ -176,15 +196,27 @@
         })
       },
 
-      savePolls() {
-        if (!this.title) return
+      saveRoom() {
+        if (!this.title && !this.startTime && !this.endTime ) return
         this.$store.dispatch('savePolls', {
           changeUsers: this.changeUsers,
           title: this.title,
           description: this.description,
-          files: this.files,
-          listPolls: this.listPolls
+          listPolls: this.listPolls,
+          start_time: moment().hour(this.startTime).valueOf(),
+          end_time: moment().hour(this.endTime).valueOf()
         })
+          .then(()=>{
+            this.$f7router.back();
+          })
+          .catch(()=>{
+            var toastCenter = this.$f7.toast.create({
+              text: "Проблемы с подключением к интернету",
+              position: "center",
+              closeTimeout: 1000
+            });
+            toastCenter.open();
+          })
       }
     },
     created() {
@@ -265,6 +297,7 @@
         border-radius: 5px;
         border: 1px solid #DCDBDB;
         padding: 20px 15px;
+        margin-bottom: 10px;
     }
 
     .myinput {
