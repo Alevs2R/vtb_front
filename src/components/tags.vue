@@ -35,17 +35,22 @@
 <style lang="scss" scoped>
     .block-tags {
         display: flex;
-        justify-content: space-around;
         align-items: center;
         width: 180px;
         height: 40px;
         border-radius: 5px;
         background: #F5F5F5;
         margin: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background: darken(#F5F5F5, 10);
+        }
 
         &-img {
             height: 24px;
             width: 24px;
+            padding: 0 15px;
         }
     }
 </style>
